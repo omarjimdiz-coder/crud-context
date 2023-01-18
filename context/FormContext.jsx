@@ -50,7 +50,7 @@ const FormProvider = ({children}) => {
         }
     }
 
-    const data = {formValues, handleChange, handleSubmit, cards}; 
+    const data = {formValues, setCards, handleChange, handleSubmit, cards}; 
 
     return(
         <FormContext.Provider

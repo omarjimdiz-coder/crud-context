@@ -2,3 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+.done{
+    text-decoration: line-through;
+    color: rgb(185, 185, 185);
+}
