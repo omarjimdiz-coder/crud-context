@@ -6,7 +6,8 @@ const FormContext = createContext();
 
 const initialState = {
     title: '',
-    task: ''
+    task: '',
+    done: false
 }
 
 const FormProvider = ({children}) => {
@@ -42,7 +43,8 @@ const FormProvider = ({children}) => {
             const values = {
                 id: uuidv4(),
                 title: formValues.title,
-                task: formValues.task
+                task: formValues.task,
+                done: false
             }
 
             setCards(cards => [...cards, values]);  

@@ -4,20 +4,23 @@ import FormContext from "../../context/FormContext";
 export const Cards = () => {
 
     const { cards, setCards } = useContext(FormContext);
-    const [isDone, setisDone] = useState(false);
-
-    const done = () => {
-        setisDone(true);
-    }
-
-    const unDone = () => {
-        setisDone(false);
-    }
 
     const onDelete = (id) => {
         setCards(oldValues => {
             return oldValues.filter(task => task.id !== id)
         });
+    }
+
+    const updateDone = (id) => {
+        const findId = cards.map(card => {
+            return card.id === id ? {
+                ...card, done: !card.done
+            } : {
+                ...card
+            }
+        });
+
+        setCards(findId);
     }
 
   return (
@@ -29,34 +32,22 @@ export const Cards = () => {
                     <p>Add a task.</p>
                 </div>
             ) : (
-                cards?.map(card => (
+                cards.map(card => (
                     <div className="mb-4 px-5" key={card.id}>
                         <div className="max-w-sm rounded overflow-hidden shadow-lg">
                             <div className="px-6 py-4">
-                                <div className={`font-bold text-xl mb-2 ${isDone && 'done' }`}>{card.title}</div>
-                                <p className={`"text-gray-700 text-base ${isDone && 'done' }`}>
+                                <div className={`font-bold text-xl mb-2 ${card.done && 'done'}`}>{card.title}</div>
+                                <p className={`"text-gray-700 text-base ${card.done && 'done'}`}>
                                     {card.task}
                                 </p>
                             </div>
                             <div className="flex items-center px-6 pt-4 pb-2">
-                                {
-                                    !isDone ? (
-                                        <button 
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                            onClick={done}
-                                        >
-                                            Done
-                                        </button>
-                                    ) : (
-                                        <button 
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                            onClick={unDone}
-                                        >
-                                            Undone
-                                        </button>
-                                    )
-                                }
-
+                                <button 
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                                    onClick={() => updateDone(card.id)}
+                                >
+                                    Done
+                                </button>
                                 <button 
                                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                     onClick={() => onDelete(card.id)}
